@@ -1,0 +1,273 @@
+body,
+html {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0f0f0f;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0f0f0f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loader {
+  border: 5px solid #1f1f1f;
+  border-top: 5px solid #00ffff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.container {
+  padding: 2rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+h2 span {
+  color: #00ffff;
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tab button {
+  background: none;
+  border: none;
+  color: #00ffff;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: border 0.3s ease;
+  white-space: nowrap;
+}
+
+.tab button.active {
+  border-bottom: 2px solid #00ffff;
+}
+
+.content {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.content.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px #00ffff55;
+}
+
+.copy-btn {
+  background: #00ffff;
+  color: black;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s;
+}
+
+.copy-btn:hover {
+  background: #00cccc;
+}
+
+.qr-code {
+  width: 200px;
+  cursor: pointer;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #00ffffaa;
+  user-select: none;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+#qrModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  cursor: zoom-out;
+}
+
+#qrModal.active {
+  display: flex;
+}
+
+#qrModal img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 20px;
+  box-shadow: 0 0 30px #00ffffcc;
+  cursor: zoom-out;
+  animation: zoomFade 0.3s ease;
+}
+
+@keyframes zoomFade {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00ffff;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 1001;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+#confirmPayment {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px #00ffff55;
+  margin-top: 2rem;
+  color: #00ffff;
+}
+
+#confirmPayment h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #00ffff;
+  text-align: center;
+}
+
+#confirmPayment label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+#confirmPayment input,
+#confirmPayment select {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: none;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  color: #000;
+}
+
+#confirmPayment input[type='file'] {
+  color: #00ffff;
+}
+
+#confirmPayment .submit-btn {
+  background: #00ffff;
+  color: black;
+  padding: 0.9rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  transition: background 0.3s;
+}
+
+#confirmPayment .submit-btn:hover {
+  background: #00cccc;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade In Animation */
+.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Zoom In for QR */
+.zoom-in {
+  animation: zoomIn 0.3s ease;
+}
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Scroll Reveal */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
