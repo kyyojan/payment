@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Payment Skyy Official" />
+  <title>Payment SKYY - Host</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Outfit", sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* PARTICLES CONTAINER */
+    #tsparticles {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+    }
+
+    /* CONTAINER CARD */
+    .container {
+      text-align: center;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      max-width: 500px;
+      width: 90%;
+      animation: fadeIn 1s ease-in-out forwards;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #00ffff;
+      text-shadow: 0 0 8px #00ffff, 0 0 12px #00cccc;
+    }
+
+    .typing-animation {
+      font-size: 1.3rem;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #00ffff;
+      width: 18ch;
+      margin: 0 auto 20px;
+      animation: typing 3s steps(18), blink 0.5s step-end infinite alternate;
+      text-shadow: 0 0 8px #00ffff, 0 0 12px #00cccc;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 18ch;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #00ffff, #00cccc);
+      background-size: 200% auto;
+      animation: neonGlow 2s linear infinite alternate;
+      color: #000;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 18px #00ffff, 0 0 28px #00cccc;
+    }
+
+    @keyframes neonGlow {
+      from {
+        background-position: 0% center;
+        box-shadow: 0 0 8px #00ffff;
+      }
+      to {
+        background-position: 100% center;
+        box-shadow: 0 0 18px #00ffff, 0 0 28px #00cccc;
+      }
+    }
+
+    /* QR FRAME */
+    .qr-frame {
+      display: inline-block;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+      margin: 20px 0;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .qr-frame:hover {
+      transform: scale(1.05);
+    }
+
+    .qr-frame img {
+      width: 200px;
+      height: auto;
+      border-radius: 6px;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* PAYMENT INFO */
+    .payment-info details {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 15px;
+      color: #cbd5e1;
+      user-select: text;
+      text-align: left;
+    }
+
+    .payment-info summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #00ffff;
+      outline: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      user-select: none;
+      list-style: none;
+    }
+
+    .payment-info summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Efek jarak dan glow di paragraf Dana & Gopay */
+    .payment-info details p {
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #00bfff;
+      text-shadow: 0 0 8px #00bfff, 0 0 12px #0099cc;
+      transition: background-color 0.3s ease;
+      padding: 4px 8px;
+      border-radius: 6px;
+      user-select: text;
+    }
+
+    .payment-info details p:active,
+    .payment-info details p.clicked {
+      background-color: rgba(0, 191, 255, 0.3);
+    }
+
+    /* OVERLAY ZOOM QR */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s;
+      z-index: 1000;
+      cursor: zoom-out;
+    }
+
+    .overlay img {
+      width: 80%;
+      max-width: 400px;
+      border-radius: 12px;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .overlay.active img {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    /* FADE IN */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* FOOTER */
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #94a3b8;
+      z-index: 10;
+      user-select: none;
+    }
+
+    /* PRELOADER */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #00ffff;
+      border-top: 6px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PARTICLES BACKGROUND -->
+  <div id="tsparticles"></div>
+
+  <!-- ABOUT SECTION -->
+  <div class="container" id="about">
+    <h1>Skyy HOST PAY</h1>
+    <div class="typing-animation">Skyy DEVELOPER</div>
+    <p class="subtitle">Terima kasih sudah menggunakan layanan kami!</p>
+    <a href="#payment" class="btn" id="payment-btn">Go to Payment</a>
+  </div>
+
+  <!-- PAYMENT SECTION (HIDDEN BY DEFAULT) -->
+  <div class="container hidden" id="payment">
+    <h1>Payment Methods</h1>
+    <p class="subtitle">Pilih metode pembayaran yang tersedia</p>
+    
+    <div class="qr-frame" id="qr-code">
+      <img src="https://via.placeholder.com/200" alt="QR Code Payment" id="qr-img">
+    </div>
+    
+    <div class="payment-info">
+      <details>
+        <summary>Informasi Pembayaran</summary>
+        <p>DANA: 082122922833 (KA*****)</p>
+        <p>GOPAY: 08978823447 (SR****)</p>
+        <p>QRIS: https://img1.pixhost.to/images/6437/610319208_fr3hosting.jpg<p>
+        <p>OVO: 08978823447 (RI***)<p>
+      </details>
+    </div>
+    
+    <a href="#about" class="btn" id="back-btn">Kembali</a>
+  </div>
+
+  <!-- QR ZOOM OVERLAY -->
+  <div class="overlay" id="overlay">
+    <img src="" alt="Zoomed QR Code" id="zoomed-qr">
+  </div>
+
+  <footer>&copy; 2025 Skyy DEV - All Rights Reserved</footer>
+
+  <script>
+    // PARTICLES INIT
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: true, zIndex: -1 },
+      particles: {
+        number: { value: 80 },
+        color: { value: "#00ffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.6 },
+        size: { value: { min: 1, max: 3 } },
+        move: { enable: true, speed: 0.6 }
+      },
+      background: { color: "#0f172a" }
+    });
+
+    // DOM ELEMENTS
+    const paymentBtn = document.getElementById('payment-btn');
+    const backBtn = document.getElementById('back-btn');
+    const aboutSection = document.getElementById('about');
+    const paymentSection = document.getElementById('payment');
+    const qrFrame = document.getElementById('qr-code');
+    const overlay = document.getElementById('overlay');
+    const qrImg = document.getElementById('qr-img');
+    const zoomedQr = document.getElementById('zoomed-qr');
+
+    // TOGGLE SECTIONS
+    paymentBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      aboutSection.classList.add('hidden');
+      paymentSection.classList.remove('hidden');
+    });
+
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      paymentSection.classList.add('hidden');
+      aboutSection.classList.remove('hidden');
+    });
+
+    // QR CODE ZOOM
+    qrFrame.addEventListener('click', () => {
+      zoomedQr.src = qrImg.src;
+      overlay.classList.add('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      overlay.classList.remove('active');
+    });
+
+    // COPY PAYMENT INFO
+    const paymentInfos = document.querySelectorAll('.payment-info p');
+    paymentInfos.forEach(info => {
+      info.addEventListener('click', function() {
+        const textToCopy = this.textContent;
+        navigator.clipboard.writeText(textToCopy)
+          .then(() => {
+            this.classList.add('clicked');
+            setTimeout(() => {
+              this.classList.remove('clicked');
+            }, 300);
+          })
+          .catch(err => {
+            console.error('Failed to copy text: ', err);
+          });
+      });
+    });
+  </script>
+</body>
+</html>
